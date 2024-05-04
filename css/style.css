@@ -1,0 +1,31 @@
+
+#navbar{
+    padding: 0.6em 5em;
+    font-size: 1.1em;
+}
+
+
+.carousel-inner img{
+    max-height: 60vh;; 
+    object-fit: cover;
+}
+
+.cardt{
+    padding: 3em 0;
+    height: 20vh;
+}
+
+.cardt .disp{
+    display: flex; /* Utilizamos flexbox para centrar */
+    justify-content: right; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+}
+
+.container{
+    margin: 1em 0;
+}
+
+.pagination{
+    margin: 3em 0;
+}
+
