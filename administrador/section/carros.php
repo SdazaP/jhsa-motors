@@ -32,17 +32,21 @@ echo $action."<br/>"; */
 
 include("../config/bd.php");
 
-// Consulta SQL para obtener los colores
+// Consultas
 $sql_col = "SELECT id, color FROM colores";
 $result_col = $conexion->query($sql_col);
 
 $sql_mar = "SELECT id, nombre FROM marca";
 $result_mar = $conexion->query($sql_mar);
 
+$sql_car =$conexion->prepare("SELECT * FROM carros");
+$sql_car->execute();
+$listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
+
 switch ($action) {
     case 'registrar':
 
-        
+        //Ejemplo
         /* $sentenciaSQL = $conexion->prepare("INSERT INTO `carros` (`Id`, `modelo`, `marca`, `anio`, `color`, `imagen`, `precio`) VALUES (NULL, 'chevy', '2', '2018', '2', 'chevy.jpg', '500000')");
         $sentenciaSQL->execute(); */
         $sentenciaSQL = $conexion->prepare("INSERT INTO `carros` (modelo, marca, anio, color, imagen, precio) VALUES (:modelo, :marca, :anio, :color, :imagen, :precio)");
@@ -54,11 +58,12 @@ switch ($action) {
         $sentenciaSQL->bindParam(':precio', $txtPrecio);
         $sentenciaSQL->execute();
 
-        echo "presionado registrar";
         break;
+
     case 'modificar':
         echo "presionado modificar";
         break;
+
     case 'cancelar':
          echo "presionado cancelar";
         break;
@@ -150,21 +155,25 @@ switch ($action) {
                     <th>Año</th>
                     <th>Color</th>
                     <th>Imagen</th>
+                    <th>Precio</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
+            <?php foreach($listaCarros as $carro) { ?>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><?php echo $carro['Id']; ?></td>
+                    <td><?php echo $carro['marca']; ?></td>
+                    <td><?php echo $carro['modelo']; ?></td>
+                    <td><?php echo $carro['anio']; ?></td>
+                    <td><?php echo $carro['color']; ?></td>
+                    <td><?php echo $carro['imagen']; ?></td>
+                    <td><?php echo $carro['precio']; ?></td>
+                    <td>Seleccionar | Borrar</td>
                 </tr>
-                
+            <?php }?>    
             </tbody>
         </table>
+                <?php  print_r($carro);?>
     </div>
 <?php include("../template/footer.php")?>
