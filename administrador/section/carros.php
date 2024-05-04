@@ -8,7 +8,8 @@ $txtAnio=(isset($_POST['txtAnio']))?$_POST['txtAnio']:"";
 $txtColor=(isset($_POST['txtColor']))?$_POST['txtColor']:"";
 $txtImagen=(isset($_FILES['txtImagen']['name']))?$_FILES['txtImagen']['name']:"";
 $txtPrecio=(isset($_POST['txtPrecio']))?$_POST['txtPrecio']:"";
-$action=(isset($_POST['action']))?$_POST['action']:"";
+
+$action=( isset($_POST['action']) ) ? $_POST['action']:"";
 
 /* echo $txtID."<br/>";
 echo $txtMarca."<br/>";
@@ -43,30 +44,32 @@ $sql_car =$conexion->prepare("SELECT * FROM carros");
 $sql_car->execute();
 $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
 
-switch ($action) {
-    case 'registrar':
-
-        //Ejemplo
-        /* $sentenciaSQL = $conexion->prepare("INSERT INTO `carros` (`Id`, `modelo`, `marca`, `anio`, `color`, `imagen`, `precio`) VALUES (NULL, 'chevy', '2', '2018', '2', 'chevy.jpg', '500000')");
-        $sentenciaSQL->execute(); */
-        $sentenciaSQL = $conexion->prepare("INSERT INTO `carros` (modelo, marca, anio, color, imagen, precio) VALUES (:modelo, :marca, :anio, :color, :imagen, :precio)");
-        $sentenciaSQL->bindParam(':modelo', $txtModelo);
-        $sentenciaSQL->bindParam(':marca', $txtMarca);
-        $sentenciaSQL->bindParam(':anio', $txtAnio);
-        $sentenciaSQL->bindParam(':color', $txtColor);
-        $sentenciaSQL->bindParam(':imagen', $txtImagen);
-        $sentenciaSQL->bindParam(':precio', $txtPrecio);
-        $sentenciaSQL->execute();
-
-        break;
-
-    case 'modificar':
-        echo "presionado modificar";
-        break;
-
-    case 'cancelar':
-         echo "presionado cancelar";
-        break;
+if ($action !== "") {
+    switch ($action) {
+        case 'registrar':
+    
+            //Ejemplo
+            /* $sentenciaSQL = $conexion->prepare("INSERT INTO `carros` (`Id`, `modelo`, `marca`, `anio`, `color`, `imagen`, `precio`) VALUES (NULL, 'chevy', '2', '2018', '2', 'chevy.jpg', '500000')");
+            $sentenciaSQL->execute(); */
+            $sentenciaSQL = $conexion->prepare("INSERT INTO `carros` (modelo, marca, anio, color, imagen, precio) VALUES (:modelo, :marca, :anio, :color, :imagen, :precio)");
+            $sentenciaSQL->bindParam(':modelo', $txtModelo);
+            $sentenciaSQL->bindParam(':marca', $txtMarca);
+            $sentenciaSQL->bindParam(':anio', $txtAnio);
+            $sentenciaSQL->bindParam(':color', $txtColor);
+            $sentenciaSQL->bindParam(':imagen', $txtImagen);
+            $sentenciaSQL->bindParam(':precio', $txtPrecio);
+            $sentenciaSQL->execute();
+    
+            break;
+    
+        case 'modificar':
+            echo "presionado modificar";
+            break;
+    
+        case 'cancelar':
+             echo "presionado cancelar";
+            break;
+    }
 }
 
 ?>
@@ -174,6 +177,5 @@ switch ($action) {
             <?php }?>    
             </tbody>
         </table>
-                <?php  print_r($carro);?>
     </div>
 <?php include("../template/footer.php")?>
