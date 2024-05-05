@@ -2,34 +2,6 @@
 <?php 
 /* print_r($_POST);
 print_r($_FILES) */
-$txtMarca=(isset($_POST['txtMarca']))?$_POST['txtMarca']:"";
-$txtModelo=(isset($_POST['txtModelo']))?$_POST['txtModelo']:"";
-$txtAnio=(isset($_POST['txtAnio']))?$_POST['txtAnio']:"";
-$txtColor=(isset($_POST['txtColor']))?$_POST['txtColor']:"";
-$txtImagen=(isset($_FILES['txtImagen']['name']))?$_FILES['txtImagen']['name']:"";
-$txtPrecio=(isset($_POST['txtPrecio']))?$_POST['txtPrecio']:"";
-
-$action=( isset($_POST['action']) ) ? $_POST['action']:"";
-
-/* echo $txtID."<br/>";
-echo $txtMarca."<br/>";
-echo $txtAnio."<br/>";
-echo $txtColor."<br/>";
-echo $txtModelo."<br/>";
-echo $txtImagen."<br/>";
-echo $action."<br/>"; */
-
-/* switch ($action) {
-    case 'registrar':
-        echo "presionado registrar";
-        break;
-    case 'modificar':
-        echo "presionado modificar";
-        break;
-    case 'cancelar':
-         echo "presionado cancelar";
-        break;
-} */
 
 include("../config/bd.php");
 
@@ -44,34 +16,6 @@ $sql_car =$conexion->prepare("SELECT * FROM carros");
 $sql_car->execute();
 $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
 
-if ($action !== "") {
-    switch ($action) {
-        case 'registrar':
-    
-            //Ejemplo
-            /* $sentenciaSQL = $conexion->prepare("INSERT INTO `carros` (`Id`, `modelo`, `marca`, `anio`, `color`, `imagen`, `precio`) VALUES (NULL, 'chevy', '2', '2018', '2', 'chevy.jpg', '500000')");
-            $sentenciaSQL->execute(); */
-            $sentenciaSQL = $conexion->prepare("INSERT INTO `carros` (modelo, marca, anio, color, imagen, precio) VALUES (:modelo, :marca, :anio, :color, :imagen, :precio)");
-            $sentenciaSQL->bindParam(':modelo', $txtModelo);
-            $sentenciaSQL->bindParam(':marca', $txtMarca);
-            $sentenciaSQL->bindParam(':anio', $txtAnio);
-            $sentenciaSQL->bindParam(':color', $txtColor);
-            $sentenciaSQL->bindParam(':imagen', $txtImagen);
-            $sentenciaSQL->bindParam(':precio', $txtPrecio);
-            $sentenciaSQL->execute();
-    
-            break;
-    
-        case 'modificar':
-            echo "presionado modificar";
-            break;
-    
-        case 'cancelar':
-             echo "presionado cancelar";
-            break;
-    }
-}
-
 ?>
 
 
@@ -84,7 +28,7 @@ if ($action !== "") {
             </div>
         </div>   
 
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data" action="../script/actions.php">
 
             
 
@@ -192,7 +136,18 @@ if ($action !== "") {
                     <td><?php  echo obtenerColorPorId($carro['marca'], $conexion); ?></td>
                     <td><?php echo $carro['imagen']; ?></td>
                     <td><?php echo $carro['precio']; ?></td>
-                    <td>Seleccionar | Borrar</td>
+
+                    <td>
+
+                        <form method="post" enctype="multipart/form-data" action="../script/actions.php">
+                            <input type="hidden" name="txtID" id="txtID" value="<?php echo $carro['Id']; ?>"/>
+
+                            <button type="submit" name="action" value="seleccionar" class="btn btn-primary">Seleccionar</button>
+
+                            <button type="submit" name="action" value="borrar" class="btn btn-danger">Borrar</button>
+                        </form>
+
+                    </td>
                 </tr>
             <?php }?>    
             </tbody>
