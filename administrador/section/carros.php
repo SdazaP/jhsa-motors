@@ -49,15 +49,24 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
                     ?>
                 </select>
             </div>
-
             <div class="form-group input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">Modelo</label>
-                <input type="text" class="form-control" name="txtModelo" id="modelo" placeholder="Modelo">
+                <input type="text" class="form-control" value="<?php
+                if (isset($_GET['txtModelo'])) {
+                    $txtModelo = $_GET['txtModelo'];
+                    echo $txtModelo;
+                }
+                ?>" name="txtModelo" id="modelo" placeholder="Modelo">
             </div>
 
             <div class="form-group input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">Año</label>
-                <input type="text" class="form-control" name="txtAnio" id="año" placeholder="AAAA">
+                <input type="text" class="form-control" value="<?php
+                if (isset($_GET['txtAnio'])) {
+                    $txtAnio = $_GET['txtAnio'];
+                    echo $txtAnio;
+                }
+                ?>" name="txtAnio" id="año" placeholder="AAAA">
             </div>
 
             <div class="form-group input-group mb-3">
@@ -65,17 +74,28 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
                 <select class="form-select" name="txtColor" id="color">
                     <option selected>Selecciona</option>
                     <?php
-                    // Iterar sobre los resultados y crear opciones del menú desplegable
                     while ($row = $result_col->fetch(PDO::FETCH_ASSOC)) {
-                        echo "<option value='" . $row["id"] . "'>" . $row["color"] . "</option>";
+                        $selected = '';
+                        if (isset($_GET['txtColor']) && $_GET['txtColor'] == $row['id']) {
+                            $selected = 'selected';
+                        }
+                        echo "<option value='" . $row["id"] . "' $selected>" . $row["color"] . "</option>";
                     }
                     ?>
                 </select>
             </div>
 
+
+
+
             <div class="form-group input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">Precio</label>
-                <input type="text" class="form-control" name="txtPrecio" id="precio" placeholder="$">
+                <input type="text" class="form-control" value="<?php
+                if (isset($_GET['txtPrecio'])) {
+                    $txtPrecio = $_GET['txtPrecio'];
+                    echo $txtPrecio;
+                }
+                ?>" name="txtPrecio" id="precio" placeholder="$">
             </div>
 
             <div class="form-group">
@@ -133,7 +153,7 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
                     <td><?php echo obtenerMarcaPorId($carro['marca'], $conexion); ?></td>
                     <td><?php echo $carro['modelo']; ?></td>
                     <td><?php echo $carro['anio']; ?></td>
-                    <td><?php  echo obtenerColorPorId($carro['marca'], $conexion); ?></td>
+                    <td><?php  echo obtenerColorPorId($carro['color'], $conexion); ?></td>
                     <td><?php echo $carro['imagen']; ?></td>
                     <td><?php echo $carro['precio']; ?></td>
 

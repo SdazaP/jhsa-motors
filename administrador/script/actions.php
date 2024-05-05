@@ -41,7 +41,23 @@ if (isset($action) && $action !== "") {
             break;
 
         case 'seleccionar':
-            echo "presionado seleccionar";
+
+            $sql_car =$conexion->prepare("SELECT * FROM carros WHERE id=:id");
+            $sql_car->bindParam(':id',$txtID);
+            $sql_car->execute();
+            $carro=$sql_car->fetchAll(PDO::FETCH_ASSOC);
+            $carro = $carro[0]; //para acceder si o si al elemento que selecciono
+
+            $txtMarca = $carro['marca'];
+            $txtModelo = $carro['modelo'];
+            $txtAnio = $carro['anio'];
+            $txtColor = $carro['color'];
+            $txtPrecio = $carro['precio'];
+            $txtImagen = $carro['imagen'];
+
+            header("Location: ../section/carros.php?txtMarca=$txtMarca&txtModelo=$txtModelo&txtAnio=$txtAnio&txtColor=$txtColor&txtPrecio=$txtPrecio&txtImagen=$txtImagen");
+            exit();
+
             break;
 
         case 'borrar':
