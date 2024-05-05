@@ -42,9 +42,12 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
                 <select class="form-select" name="txtMarca" id="marca">
                     <option selected>Selecciona</option>
                     <?php
-                    // Iterar sobre los resultados y crear opciones del menú desplegable
                     while ($row = $result_mar->fetch(PDO::FETCH_ASSOC)) {
-                        echo "<option value='" . $row["id"] . "'>" . $row["nombre"] . "</option>";
+                        $selected = '';
+                        if (isset($_GET['txtMarca']) && $_GET['txtMarca'] == $row['id']) {
+                            $selected = 'selected';
+                        }
+                        echo "<option value='" . $row["id"] . "' $selected>" . $row["nombre"] . "</option>";
                     }
                     ?>
                 </select>
@@ -100,7 +103,11 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
 
             <div class="form-group">
                 <label>Imagen</label>
-                <input type="file" class="form-control" name="txtImagen" id="año" placeholder="xxxx">
+                <input type="file" class="form-control" value="<?php
+                if (isset($_GET['txtImagen'])) {
+                    $txtImagen = $_GET['txtImagen'];
+                    echo $txtImagen;
+                }?>" name="txtImagen" id="año" placeholder="xxxx">
             </div>
             
             <div class="btn-group" role="group" aria-label="">
