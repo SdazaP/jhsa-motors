@@ -149,6 +149,26 @@ if ($action !== "") {
         
     </div>
     <div class="col-md-7">
+    <?php
+        function obtenerMarcaPorId($marcaId, $conexion)
+        {
+            $sql = "SELECT nombre FROM marca WHERE id = :marcaId";
+            $stmt = $conexion->prepare($sql);
+            $stmt->bindParam(':marcaId', $marcaId, PDO::PARAM_INT);
+            $stmt->execute();
+            $marca = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $marca['nombre'];
+        }
+        function obtenerColorPorId($colorId, $conexion)
+        {
+            $sql = "SELECT color FROM colores WHERE id = :colorId";
+            $stmt = $conexion->prepare($sql);
+            $stmt->bindParam(':colorId', $colorId, PDO::PARAM_INT);
+            $stmt->execute();
+            $marca = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $marca['color'];
+        }
+    ?>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -166,10 +186,10 @@ if ($action !== "") {
             <?php foreach($listaCarros as $carro) { ?>
                 <tr>
                     <td><?php echo $carro['Id']; ?></td>
-                    <td><?php echo $carro['marca']; ?></td>
+                    <td><?php echo obtenerMarcaPorId($carro['marca'], $conexion); ?></td>
                     <td><?php echo $carro['modelo']; ?></td>
                     <td><?php echo $carro['anio']; ?></td>
-                    <td><?php echo $carro['color']; ?></td>
+                    <td><?php  echo obtenerColorPorId($carro['marca'], $conexion); ?></td>
                     <td><?php echo $carro['imagen']; ?></td>
                     <td><?php echo $carro['precio']; ?></td>
                     <td>Seleccionar | Borrar</td>
