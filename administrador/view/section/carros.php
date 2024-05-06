@@ -3,7 +3,7 @@
 /* print_r($_POST);
 print_r($_FILES) */
 
-include("../config/bd.php");
+include("../../model/bd.php");
 
 // Consultas
 $sql_col = "SELECT id, color FROM colores";
@@ -28,7 +28,7 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>   
 
-        <form method="POST" enctype="multipart/form-data" action="../script/actions.php">
+        <form method="POST" enctype="multipart/form-data" action="../../controller/actions.php">
 
             
 
@@ -166,7 +166,7 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
 
                     <td>
 
-                        <form method="post" enctype="multipart/form-data" action="../script/actions.php">
+                        <form method="post" enctype="multipart/form-data" action="../../controller/actions.php">
                             <input type="hidden" name="txtID" id="txtID" value="<?php echo $carro['Id']; ?>"/>
 
                             <button type="submit" name="action" value="seleccionar" class="btn btn-primary">Seleccionar</button>

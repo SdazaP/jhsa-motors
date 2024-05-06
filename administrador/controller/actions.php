@@ -9,7 +9,7 @@ $txtPrecio=(isset($_POST['txtPrecio']))?$_POST['txtPrecio']:"";
 
 $action=( isset($_POST['action']) ) ? $_POST['action']:"";
 
-include("../config/bd.php");
+include("../../model/bd.php");
 
 if (isset($action) && $action !== "") {
     switch ($action) {
@@ -27,13 +27,28 @@ if (isset($action) && $action !== "") {
             $sentenciaSQL->bindParam(':precio', $txtPrecio);
             $sentenciaSQL->execute();
 
-            header("Location: ../section/carros.php");
+            header("Location: ../view/section/carros.php");
             exit();
     
             break;
     
         case 'modificar':
-            echo "presionado modificar";
+            echo "modificar";
+            $sentenciaSQL = $conexion->prepare("UPDATE `carros` SET modelo= :modelo, marca = :marca, anio = :anio, color = :color, imagen= :imagen, precio = :precio WHERE id = :id");
+
+            $sentenciaSQL->bindParam(':modelo', $txtModelo);
+            $sentenciaSQL->bindParam(':marca', $txtMarca);
+            $sentenciaSQL->bindParam(':anio', $txtAnio);
+            $sentenciaSQL->bindParam(':color', $txtColor);
+            $sentenciaSQL->bindParam(':imagen', $txtImagen);
+            $sentenciaSQL->bindParam(':precio', $txtPrecio);
+            $sentenciaSQL->bindParam(':id', $txtID);
+            $sentenciaSQL->execute();
+
+            
+            // Redirect after successful operation
+            header("Location: ../view/section/carros.php");
+            exit();
             break;
     
         case 'cancelar':
@@ -55,7 +70,7 @@ if (isset($action) && $action !== "") {
             $txtPrecio = $carro['precio'];
             $txtImagen = $carro['imagen'];
 
-            header("Location: ../section/carros.php?txtMarca=$txtMarca&txtModelo=$txtModelo&txtAnio=$txtAnio&txtColor=$txtColor&txtPrecio=$txtPrecio&txtImagen=$txtImagen");
+            header("Location: ../view/section/carros.php?txtMarca=$txtMarca&txtModelo=$txtModelo&txtAnio=$txtAnio&txtColor=$txtColor&txtPrecio=$txtPrecio&txtImagen=$txtImagen");
             exit();
 
             break;
@@ -65,7 +80,7 @@ if (isset($action) && $action !== "") {
             $elim_car->bindParam(':id',$txtID);
             $elim_car->execute();
             
-            header("Location: ../section/carros.php");
+            header("Location: ../view/section/carros.php");
             exit();
             break;
 
