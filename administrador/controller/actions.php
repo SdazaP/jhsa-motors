@@ -88,7 +88,8 @@ if (isset($action) && $action !== "") {
             break;
     
         case 'cancelar':
-             echo "presionado cancelar";
+            header("Location: ../view/section/carros.php");
+            exit();
             break;
 
         case 'seleccionar':

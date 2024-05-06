@@ -112,8 +112,8 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
                 ?>" name="txtPrecio" id="precio" placeholder="$">
             </div>
 
-            <div class="form-group">
-                <label>Imagen</label>
+            <div class="form-group input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Imagen</label>
                 <input type="file" class="form-control" value="<?php
                 if (isset($_GET['txtImagen'])) {
                     $txtImagen = $_GET['txtImagen'];
@@ -172,7 +172,10 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
                     <td><?php echo $carro['modelo']; ?></td>
                     <td><?php echo $carro['anio']; ?></td>
                     <td><?php  echo obtenerColorPorId($carro['color'], $conexion); ?></td>
-                    <td><?php echo $carro['imagen']; ?></td>
+                    <td>
+                        <img class="img_car" src="../img/<?php echo $carro['imagen']; ?>" alt="">
+                        
+                    </td>
                     <td><?php echo $carro['precio']; ?></td>
 
                     <td>
