@@ -34,7 +34,18 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
 
             <div class ="form-group input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">ID</label>
-                <input type="text" class="form-control"  placeholder="ID automatico" disabled>
+                <input type="hidden" class="form-control" id="id" name="txtID" value="<?php
+                if (isset($_GET['txtID'])) {
+                    $txtID = $_GET['txtID'];
+                    echo $txtID;
+                }
+                ?>" placeholder="ID automatico">
+                <input type="text" class="form-control" id="id" name="txtID" value="<?php
+                if (isset($_GET['txtID'])) {
+                    $txtID = $_GET['txtID'];
+                    echo $txtID;
+                }
+                ?>" placeholder="ID automatico" disabled>
             </div>
 
             <div class="form-group input-group mb-3">

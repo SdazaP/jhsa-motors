@@ -33,14 +33,12 @@ if (isset($action) && $action !== "") {
             break;
     
         case 'modificar':
-            echo "modificar";
-            $sentenciaSQL = $conexion->prepare("UPDATE `carros` SET modelo= :modelo, marca = :marca, anio = :anio, color = :color, imagen= :imagen, precio = :precio WHERE id = :id");
+            $sentenciaSQL = $conexion->prepare("UPDATE carros SET modelo= :modelo, marca = :marca, anio = :anio, color = :color, precio = :precio WHERE id = :id");
 
             $sentenciaSQL->bindParam(':modelo', $txtModelo);
             $sentenciaSQL->bindParam(':marca', $txtMarca);
             $sentenciaSQL->bindParam(':anio', $txtAnio);
             $sentenciaSQL->bindParam(':color', $txtColor);
-            $sentenciaSQL->bindParam(':imagen', $txtImagen);
             $sentenciaSQL->bindParam(':precio', $txtPrecio);
             $sentenciaSQL->bindParam(':id', $txtID);
             $sentenciaSQL->execute();
@@ -63,6 +61,7 @@ if (isset($action) && $action !== "") {
             $carro=$sql_car->fetchAll(PDO::FETCH_ASSOC);
             $carro = $carro[0]; //para acceder si o si al elemento que selecciono
 
+            
             $txtMarca = $carro['marca'];
             $txtModelo = $carro['modelo'];
             $txtAnio = $carro['anio'];
@@ -70,7 +69,7 @@ if (isset($action) && $action !== "") {
             $txtPrecio = $carro['precio'];
             $txtImagen = $carro['imagen'];
 
-            header("Location: ../view/section/carros.php?txtMarca=$txtMarca&txtModelo=$txtModelo&txtAnio=$txtAnio&txtColor=$txtColor&txtPrecio=$txtPrecio&txtImagen=$txtImagen");
+            header("Location: ../view/section/carros.php?txtID=$txtID&txtMarca=$txtMarca&txtModelo=$txtModelo&txtAnio=$txtAnio&txtColor=$txtColor&txtPrecio=$txtPrecio&txtImagen=$txtImagen");
             exit();
 
             break;
