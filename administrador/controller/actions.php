@@ -23,7 +23,17 @@ if (isset($action) && $action !== "") {
             $sentenciaSQL->bindParam(':marca', $txtMarca);
             $sentenciaSQL->bindParam(':anio', $txtAnio);
             $sentenciaSQL->bindParam(':color', $txtColor);
-            $sentenciaSQL->bindParam(':imagen', $txtImagen);
+
+            $fecha = new Datetime();
+            $nombreArchivo = ($txtImagen!="")?$fecha->getTimestamp()."_".$_FILES["txtImagen"]["name"]:"imagen.jpg";
+
+            $tmpImagen = $_FILES["txtImagen"]["tmp_name"];
+
+            if ($tmpImagen!="") {
+                move_uploaded_file($tmpImagen,"../view/img/".$nombreArchivo);
+            }
+
+            $sentenciaSQL->bindParam(':imagen', $nombreArchivo);
             $sentenciaSQL->bindParam(':precio', $txtPrecio);
             $sentenciaSQL->execute();
 
@@ -42,6 +52,34 @@ if (isset($action) && $action !== "") {
             $sentenciaSQL->bindParam(':precio', $txtPrecio);
             $sentenciaSQL->bindParam(':id', $txtID);
             $sentenciaSQL->execute();
+
+            if($txtImagen!=""){
+                //Subir imagen
+                $fecha = new Datetime();
+                $nombreArchivo = ($txtImagen!="")?$fecha->getTimestamp()."_".$_FILES["txtImagen"]["name"]:"imagen.jpg";
+
+                $tmpImagen = $_FILES["txtImagen"]["tmp_name"];
+                move_uploaded_file($tmpImagen,"../view/img/".$nombreArchivo);
+
+                //Eliminar imagen anterior
+                $sql_car =$conexion->prepare("SELECT imagen FROM carros WHERE id=:id");
+                $sql_car->bindParam(':id',$txtID);
+                $sql_car->execute();
+                $carro=$sql_car->fetch(PDO::FETCH_LAZY);
+
+                if (isset($carro["imagen"]) && ($carro["imagen"]!="imagen.jpg")) {
+
+                    if (file_exists("../view/img/".$carro["imagen"])) {
+
+                        unlink("../view/img/".$carro["imagen"]);
+                    }
+                }
+                //Actualizar nombre
+                $sentenciaSQL = $conexion->prepare("UPDATE carros SET imagen=:imagen WHERE id = :id");
+                $sentenciaSQL->bindParam(':imagen', $nombreArchivo);
+                $sentenciaSQL->bindParam(':id', $txtID);
+                $sentenciaSQL->execute();
+            }
 
             
             // Redirect after successful operation
@@ -75,6 +113,20 @@ if (isset($action) && $action !== "") {
             break;
 
         case 'borrar':
+
+            $sql_car =$conexion->prepare("SELECT imagen FROM carros WHERE id=:id");
+            $sql_car->bindParam(':id',$txtID);
+            $sql_car->execute();
+            $carro=$sql_car->fetch(PDO::FETCH_LAZY);
+
+            if (isset($carro["imagen"]) && ($carro["imagen"]!="imagen.jpg")) {
+
+                if (file_exists("../view/img/".$carro["imagen"])) {
+
+                    unlink("../view/img/".$carro["imagen"]);
+                }
+            }
+
             $elim_car = $conexion->prepare("DELETE FROM `carros` WHERE id=:id");
             $elim_car->bindParam(':id',$txtID);
             $elim_car->execute();
