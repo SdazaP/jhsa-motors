@@ -3,7 +3,7 @@
         include("../model/bd.php");
 
         // Definir el número de resultados por página
-        $resultados_por_pagina = 4;
+        $resultados_por_pagina = 2;
 
         // Obtener el número total de resultados
         $sql_total = "SELECT COUNT(id) AS total FROM carros";

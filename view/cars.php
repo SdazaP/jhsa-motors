@@ -2,8 +2,18 @@
 
 <div class="container">
     <div class="row justify-content-center">
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <?php 
+                include("../controller/pagination.php");
+                for ($pagina = 1; $pagina <= $total_paginas; $pagina++) : ?>
+                    <li class="page-item"><a class="page-link" href="?pagina=<?php echo $pagina; ?>"><?php echo $pagina; ?></a></li>
+                <?php endfor; ?>
+            </ul>
+        </nav>
         <?php
-        include("../controller/pagination.php");
+        
         // Mostrar los resultados
         if ($resultado->rowCount() > 0) {
             while ($fila = $resultado->fetch(PDO::FETCH_ASSOC)) {
@@ -27,14 +37,6 @@
         ?>
 
     </div>
-
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <?php for ($pagina = 1; $pagina <= $total_paginas; $pagina++) : ?>
-                <li class="page-item"><a class="page-link" href="?pagina=<?php echo $pagina; ?>"><?php echo $pagina; ?></a></li>
-            <?php endfor; ?>
-        </ul>
-    </nav>
 
 </div>
 
