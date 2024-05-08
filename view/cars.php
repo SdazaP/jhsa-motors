@@ -1,4 +1,4 @@
-<?php include("template/header.php")?>
+<?php include("template/sec_header.php")?>
 
 <div class="container">
     <div class="row justify-content-center">

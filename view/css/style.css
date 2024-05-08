@@ -3,6 +3,10 @@
     font-size: 1.1em;
 }
 
+.row{
+    color: black;
+}
+
 
 .carousel-inner img{
     max-height: 60vh;; 
