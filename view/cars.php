@@ -1,64 +1,41 @@
 <?php include("template/header.php")?>
 
-        <div class="container">
-            <div class="row justify-content-center">
-
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </nav>
-
-                <div class="col-md-3">
-                    <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+<div class="container">
+    <div class="row justify-content-center">
+        <?php
+        include("../controller/pagination.php");
+        // Mostrar los resultados
+        if ($resultado->rowCount() > 0) {
+            while ($fila = $resultado->fetch(PDO::FETCH_ASSOC)) {
+                //var_dump($fila);
+        ?>
+                <div class='col-md-3'>
+                    <div class='card' style='width: 18rem;'>
+                        <img class="img_car" src="../administrador/view/img/<?php echo $fila['imagen']; ?>" alt="">
+                        <div class='card-body'>
+                            <h5 class='card-title'><?php echo obtenerMarcaPorId($fila['marca'], $conexion) ." ". $fila["modelo"]." ".$fila["anio"]; ?></h5>
+                            
+                            <a href='#' class='btn btn-primary'>Ver detalles</a>
                         </div>
                     </div>
                 </div>
+        <?php
+            }
+        } else {
+            echo "0 resultados";
+        }
+        ?>
 
-                <div class="col-md-3">
-                    <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
+    </div>
 
-                <div class="col-md-3">
-                    <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <?php for ($pagina = 1; $pagina <= $total_paginas; $pagina++) : ?>
+                <li class="page-item"><a class="page-link" href="?pagina=<?php echo $pagina; ?>"><?php echo $pagina; ?></a></li>
+            <?php endfor; ?>
+        </ul>
+    </nav>
 
-                <div class="col-md-3">
-                    <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        
+</div>
 
 <?php include("template/footer.php")?>
