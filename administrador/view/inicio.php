@@ -1,4 +1,13 @@
-<?php include("template/header.php") ?>
+<?php 
+
+    session_start();
+    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+        header('Location: index.php');
+        exit;
+    }
+    
+    include("template/header.php") 
+?>
     <div class="jumbotron">
         <h1 class="display-3">Bienvenido al administrador del sitio</h1>
         <p class="lead">Jumbo helper text</p>

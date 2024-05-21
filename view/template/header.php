@@ -29,7 +29,7 @@
                 <a class="nav-link" href="../index.php">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="view/cars.php">Autos</a>
+                <a class="nav-link" href="view/cars.php?pagina=1">Autos</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="view/nosotros.php">Nosotros</a>

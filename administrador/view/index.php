@@ -1,4 +1,12 @@
-<?php include("../controller/controllerCaptcha.php")?>
+<?php
+include("../controller/controllerCaptcha.php");
+
+// Si ya esta logeado te mandara a inicio.php
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    header('Location: inicio.php');
+    exit;
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,7 +15,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrador</title>
     <link rel="stylesheet" href="css/style.css?v=1">
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -37,7 +44,10 @@
                 <br>
                 <div class="col-md-6">
                     <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" name="contra" placeholder="********" id="exampleInputPassword1">
+                    <input type="password" class="form-control" name="contra" placeholder="********" id="exampleInputPassword1" required>
+                    <div class="invalid-feedback">
+                        Por favor coloca tu contraseña.
+                    </div>
                 </div>
                 <br>
 
@@ -47,12 +57,10 @@
                 <button id="access" type="submit" class="btn btn-primary" onclick="showCaptcha()">Acceder</button>
 
                 <?php if (!empty($error_message)) : ?>
-                    <div class="error-message">
+                    <div class="alert alert-danger mt-3">
                         <?php echo $error_message; ?>
                     </div>
                 <?php endif; ?>
-
-
             </form>
             <div class="col">
                 <img class="img-fluid" src="img/admin.jpg" alt="admin">
@@ -62,6 +70,5 @@
 </div>
 
 <script src="script/captcha.js"></script>
-
 
 <?php include("template/footer.php")?>

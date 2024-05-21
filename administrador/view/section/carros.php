@@ -3,6 +3,12 @@
 /* print_r($_POST);
 print_r($_FILES) */
 
+session_start();
+    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+        header('Location: login.php');
+        exit;
+    }
+
 include("../../model/bd.php");
 
 // Consultas
