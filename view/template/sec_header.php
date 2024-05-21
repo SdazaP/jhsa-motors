@@ -8,6 +8,9 @@
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
 
 
 </head>
@@ -40,22 +43,22 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="https://www.facebook.com/tucuenta">
-                    <i class="fab fa-facebook-f text-primary"></i> <!-- Icono de Facebook -->
+                    <i class="fab fa-facebook-f"></i> <!-- Icono de Facebook -->
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="https://www.instagram.com/tucuenta">
-                    <i class="fab fa-instagram text-primary"></i> <!-- Icono de Instagram -->
+                    <i class="fab fa-instagram"></i> <!-- Icono de Instagram -->
                 </a>
             </li>
             <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <i class="fas fa-address-book text-primary"></i> <!-- Icono de carrito de compras -->
+                        <i class="fas fa-address-book"></i> <!-- Icono de carrito de compras -->
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="nosotros.php">
-                        <i class="fas fa-user text-primary"></i> <!-- Icono de inicio de sesión -->
+                        <i class="fas fa-user"></i> <!-- Icono de inicio de sesión -->
                 </a>
                 </li>
         </ul>
