@@ -46,7 +46,7 @@
                     session_start();
                     $_SESSION['loggedin'] = true;
                     $_SESSION['username'] = $user;
-                    header('Location: inicio.php'); // Redirect to the protected page
+                    header('Location: inicio.php');
                     exit;
                 } else{
                     $error_message = 'Constraseña incorrecta';

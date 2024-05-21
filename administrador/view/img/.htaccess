@@ -1,0 +1,2 @@
+Deny from all
+RedirectMatch 301 ^/img/(.*)$ http://localhost/sitio/administrador/view/inicio.php

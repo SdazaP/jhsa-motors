@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("../controller/controllerCaptcha.php");
 
 // Si ya esta logeado te mandara a inicio.php
