@@ -9,42 +9,44 @@ $txtID = isset($_POST['txtID']) ? $_POST['txtID'] : '';
 $txtColor = isset($_POST['txtColor']) ? $_POST['txtColor'] : '';
 
 if ($action) {
-    switch ($action) {
-        case 'registrar':
-            $datos = [
-                'color' => $txtColor
-            ];
-            $color->registra($datos);
-            redirect('color.php');
-            break;
-
-        case 'modificar':
-            $datos = [
-                'id' => $txtID,
-                'color' => $txtColor
-            ];
-            $color->modificar($datos);
-            redirect('color.php');
-            break;
-
-        case 'cancelar':
-            redirect('color.php');
-            break;
-
-        case 'seleccionar':
-            $colorSeleccionado = $color->seleccionar($txtID);
-            header("Location: ../view/section/color.php?" . http_build_query($colorSeleccionado));
-            break;
-
-        case 'borrar':
-            $color->delete($txtID);
-            redirect('color.php');
-            break;
-
-        default:
-            // Acción no reconocida
-            break;    
+    if (function_exists($action)) {
+        $action();
     }
+}
+
+function registrar() {
+    global $txtColor, $color;
+    $datos = [
+        'color' => $txtColor
+    ];
+    $color->registra($datos);
+    redirect('color.php');
+}
+
+function modificar() {
+    global $txtID, $txtColor, $color;
+    $datos = [
+        'id' => $txtID,
+        'color' => $txtColor
+    ];
+    $color->modificar($datos);
+    redirect('color.php');
+}
+
+function cancelar() {
+    redirect('color.php');
+}
+
+function seleccionar() {
+    global $txtID, $color;
+    $colorSeleccionado = $color->seleccionar($txtID);
+    redirect('color.php', $colorSeleccionado);
+}
+
+function borrar() {
+    global $txtID, $color;
+    $color->borrar($txtID);
+    redirect('color.php');
 }
 
 function redirect($url, $data = null) {
@@ -56,3 +58,4 @@ function redirect($url, $data = null) {
     }
     exit();
 }
+?>

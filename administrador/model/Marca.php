@@ -17,7 +17,7 @@ class Marca {
     public function registrar($datos) {
         $sql = "INSERT INTO marca (nombre) VALUES (:nombre)";
         $stmt = $this->conexion->prepare($sql);
-        return $stmt->execute();
+        return $stmt->execute($datos); 
     }
 
     public function modificar($datos) {
