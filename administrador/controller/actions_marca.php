@@ -1,50 +1,61 @@
 <?php
-$txtID = isset($_POST['txtID']) ? $_POST['txtID'] : "";
-$txtNombre = isset($_POST['txtNombre']) ? $_POST['txtNombre'] : "";
-$action = isset($_POST['action']) ? $_POST['action'] : "";
+include_once("../model/bd.php");
+include_once("../model/Marca.php");
 
-include("../../model/bd.php");
+class MarcaController {
+    private $modelo;
 
-if (isset($action) && $action !== "") {
-    switch ($action) {
-        case 'registrar':
-            $sentenciaSQL = $conexion->prepare("INSERT INTO marca (nombre) VALUES (:nombre)");
-            $sentenciaSQL->bindParam(':nombre', $txtNombre);
-            $sentenciaSQL->execute();
-            header("Location: ../view/section/marca.php");
-            exit();
+    public function __construct($db) {
+        $this->modelo = new Marca($db);
+    }
 
-        case 'modificar':
-            $sentenciaSQL = $conexion->prepare("UPDATE marca SET nombre = :nombre WHERE id = :id");
-            $sentenciaSQL->bindParam(':nombre', $txtNombre);
-            $sentenciaSQL->bindParam(':id', $txtID);
-            $sentenciaSQL->execute();
-            header("Location: ../view/section/marca.php");
-            exit();
+    public function handleRequest() {
+        $action = isset($_POST['action']) ? $_POST['action'] : '';
+        $txtID = isset($_POST['txtID']) ? $_POST['txtID'] : '';
+        $txtNombre = isset($_POST['txtNombre']) ? $_POST['txtNombre'] : '';
 
-        case 'cancelar':
-            header("Location: ../view/section/marca.php");
-            exit();
+        switch ($action) {
+            case 'registrar':
+                $this->modelo->create($txtNombre);
+                $this->redirect('marca.php');
+                break;
 
-        case 'seleccionar':
-            $sql_mar = $conexion->prepare("SELECT * FROM marca WHERE id = :id");
-            $sql_mar->bindParam(':id', $txtID);
-            $sql_mar->execute();
-            $marca = $sql_mar->fetch(PDO::FETCH_ASSOC);
-            $txtNombre = $marca['nombre'];
-            header("Location: ../view/section/marca.php?txtID=$txtID&txtNombre=$txtNombre");
-            exit();
+            case 'modificar':
+                $this->modelo->update($txtID, $txtNombre);
+                $this->redirect('marca.php');
+                break;
 
-        case 'borrar':
-            $elim_mar = $conexion->prepare("DELETE FROM marca WHERE id = :id");
-            $elim_mar->bindParam(':id', $txtID);
-            $elim_mar->execute();
-            header("Location: ../view/section/marca.php");
-            exit();
+            case 'cancelar':
+                $this->redirect('marca.php');
+                break;
 
-        default:
-            // Acción no reconocida
-            break;
+            case 'seleccionar':
+                $marca = $this->modelo->getById($txtID);
+                $this->redirect('marca.php', $marca);
+                break;
+
+            case 'borrar':
+                $this->modelo->delete($txtID);
+                $this->redirect('marca.php');
+                break;
+
+            default:
+                // Acción no reconocida
+                break;
+        }
+    }
+
+    private function redirect($url, $data = null) {
+        if ($data) {
+            $query = http_build_query($data);
+            header("Location: ../view/section/$url?$query");
+        } else {
+            header("Location: ../view/section/$url");
+        }
+        exit();
     }
 }
+
+$controller = new MarcaController($conexion);
+$controller->handleRequest();
 ?>

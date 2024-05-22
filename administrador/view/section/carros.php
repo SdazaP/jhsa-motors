@@ -22,6 +22,14 @@ $sql_car =$conexion->prepare("SELECT * FROM carros");
 $sql_car->execute();
 $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
 
+
+// Debugging los parámetros GET
+/* if (isset($_GET)) {
+    echo '<pre>';
+    print_r($_GET);
+    echo '</pre>';
+}
+ */
 ?>
 
 
@@ -34,21 +42,19 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>   
 
-        <form method="POST" enctype="multipart/form-data" action="../../controller/actions.php">
-
-            
+        <form method="POST" enctype="multipart/form-data" action="../../controller/actions_carro.php">
 
             <div class ="form-group input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">ID</label>
                 <input type="hidden" class="form-control" id="id" name="txtID" value="<?php
-                if (isset($_GET['txtID'])) {
-                    $txtID = $_GET['txtID'];
+                if (isset($_GET['Id'])) {
+                    $txtID = $_GET['Id'];
                     echo $txtID;
                 }
                 ?>" placeholder="ID automatico">
                 <input type="text" class="form-control" id="id" name="txtID" value="<?php
-                if (isset($_GET['txtID'])) {
-                    $txtID = $_GET['txtID'];
+                if (isset($_GET['Id'])) {
+                    $txtID = $_GET['Id'];
                     echo $txtID;
                 }
                 ?>" placeholder="ID automatico" disabled>
@@ -61,7 +67,7 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
                     <?php
                     while ($row = $result_mar->fetch(PDO::FETCH_ASSOC)) {
                         $selected = '';
-                        if (isset($_GET['txtMarca']) && $_GET['txtMarca'] == $row['id']) {
+                        if (isset($_GET['marca']) && $_GET['marca'] == $row['id']) {
                             $selected = 'selected';
                         }
                         echo "<option value='" . $row["id"] . "' $selected>" . $row["nombre"] . "</option>";
@@ -72,8 +78,8 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
             <div class="form-group input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">Modelo</label>
                 <input type="text" class="form-control" value="<?php
-                if (isset($_GET['txtModelo'])) {
-                    $txtModelo = $_GET['txtModelo'];
+                if (isset($_GET['modelo'])) {
+                    $txtModelo = $_GET['modelo'];
                     echo $txtModelo;
                 }
                 ?>" name="txtModelo" id="modelo" placeholder="Modelo">
@@ -82,8 +88,8 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
             <div class="form-group input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">Año</label>
                 <input type="text" class="form-control" value="<?php
-                if (isset($_GET['txtAnio'])) {
-                    $txtAnio = $_GET['txtAnio'];
+                if (isset($_GET['anio'])) {
+                    $txtAnio = $_GET['anio'];
                     echo $txtAnio;
                 }
                 ?>" name="txtAnio" id="año" placeholder="AAAA">
@@ -96,7 +102,7 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
                     <?php
                     while ($row = $result_col->fetch(PDO::FETCH_ASSOC)) {
                         $selected = '';
-                        if (isset($_GET['txtColor']) && $_GET['txtColor'] == $row['id']) {
+                        if (isset($_GET['color']) && $_GET['color'] == $row['id']) {
                             $selected = 'selected';
                         }
                         echo "<option value='" . $row["id"] . "' $selected>" . $row["color"] . "</option>";
@@ -111,8 +117,8 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
             <div class="form-group input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">Precio</label>
                 <input type="text" class="form-control" value="<?php
-                if (isset($_GET['txtPrecio'])) {
-                    $txtPrecio = $_GET['txtPrecio'];
+                if (isset($_GET['precio'])) {
+                    $txtPrecio = $_GET['precio'];
                     echo $txtPrecio;
                 }
                 ?>" name="txtPrecio" id="precio" placeholder="$">
@@ -121,8 +127,8 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
             <div class="form-group input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">Imagen</label>
                 <input type="file" class="form-control" value="<?php
-                if (isset($_GET['txtImagen'])) {
-                    $txtImagen = $_GET['txtImagen'];
+                if (isset($_GET['imagen'])) {
+                    $txtImagen = $_GET['imagen'];
                     echo $txtImagen;
                 }?>" name="txtImagen" id="año" placeholder="xxxx">
             </div>
@@ -186,7 +192,7 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
 
                     <td>
 
-                        <form method="post" enctype="multipart/form-data" action="../../controller/actions.php">
+                        <form method="post" enctype="multipart/form-data" action="../../controller/actions_carro.php">
                             <input type="hidden" name="txtID" id="txtID" value="<?php echo $carro['Id']; ?>"/>
 
                             <button type="submit" name="action" value="seleccionar" class="btn btn-primary">Seleccionar</button>
