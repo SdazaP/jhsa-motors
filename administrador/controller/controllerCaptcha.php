@@ -46,7 +46,7 @@
                     session_start();
                     $_SESSION['loggedin'] = true;
                     $_SESSION['username'] = $user;
-                    header('Location: inicio.php');
+                    header('Location: section/inicio.php');
                     exit;
                 } else{
                     $error_message = 'Constraseña incorrecta';

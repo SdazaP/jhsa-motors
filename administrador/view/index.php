@@ -4,7 +4,7 @@ include("../controller/controllerCaptcha.php");
 
 // Si ya esta logeado te mandara a inicio.php
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    header('Location: inicio.php');
+    header('Location: /sitio/administrador/view/section/inicio.php');
     exit;
 }
 ?>
@@ -23,16 +23,16 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-info justify-content-center">
     <ul class="nav navbar-nav ">
         <li class="nav-item active">
-            <a class="nav-link active" href="#">Administrador</span></a>
+            <a class="nav-link active" href="#">Administrador</a>
         </li>
     </ul>
 </nav>
 
-<div class="container">
-    <div class="row">
-        <div class="row align-items-center">
-            <form method="POST" class="col needs-validation" novalidate>
-                <div class="col-md-6">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <form method="POST" class="needs-validation p-4 border rounded bg-light shadow" novalidate>
+                <div class="mb-3">
                     <label for="validationCustomUsername" class="form-label">Usuario</label>
                     <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
@@ -42,20 +42,18 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                         </div>
                     </div>
                 </div>
-                <br>
-                <div class="col-md-6">
+                <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Contraseña</label>
                     <input type="password" class="form-control" name="contra" placeholder="********" id="exampleInputPassword1" required>
                     <div class="invalid-feedback">
                         Por favor coloca tu contraseña.
                     </div>
                 </div>
-                <br>
-
+                
                 <input type="hidden" id="captcha" name="captcha">
                 <input type="hidden" id="real_captcha" name="real_captcha">
                 
-                <button id="access" type="submit" class="btn btn-primary" onclick="showCaptcha()">Acceder</button>
+                <button id="access" type="submit" class="btn btn-primary w-100" onclick="showCaptcha()">Acceder</button>
 
                 <?php if (!empty($error_message)) : ?>
                     <div class="alert alert-danger mt-3">
@@ -63,9 +61,9 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                     </div>
                 <?php endif; ?>
             </form>
-            <div class="col">
-                <img class="img-fluid" src="img/admin.jpg" alt="admin">
-            </div>
+        </div>
+        <div class="col-lg-6 d-flex align-items-center justify-content-center">
+            <img class="img-fluid" src="img/admin.jpg" alt="admin">
         </div>
     </div>
 </div>
