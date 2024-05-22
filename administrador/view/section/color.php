@@ -27,7 +27,7 @@ $listaColores = $sql_col->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <form method="POST" action="../../controller/actions_color.php">
+    <form method="POST" action="../../controller/controllerColor.php">
         <div class="form-group input-group mb-3">
             <label class="input-group-text" for="inputGroupSelect01">ID</label>
             <input type="hidden" class="form-control" name="txtID" value="<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>">
@@ -62,7 +62,7 @@ $listaColores = $sql_col->fetchAll(PDO::FETCH_ASSOC);
                 <td><?php echo $color['id']; ?></td>
                 <td><?php echo $color['color']; ?></td>
                 <td>
-                    <form method="post" action="../../controller/actions_color.php">
+                    <form method="post" action="../../controller/controllerColor.php">
                         <input type="hidden" name="txtID" value="<?php echo $color['id']; ?>" />
                         <button type="submit" name="action" value="seleccionar" class="btn btn-primary">Seleccionar</button>
                         <button type="submit" name="action" value="borrar" class="btn btn-danger">Borrar</button>

@@ -42,7 +42,7 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>   
 
-        <form method="POST" enctype="multipart/form-data" action="../../controller/actions_carro.php">
+        <form method="POST" enctype="multipart/form-data" action="../../controller/controllerCarro.php">
 
             <div class ="form-group input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">ID</label>
@@ -192,7 +192,7 @@ $listaCarros=$sql_car->fetchAll(PDO::FETCH_ASSOC);
 
                     <td>
 
-                        <form method="post" enctype="multipart/form-data" action="../../controller/actions_carro.php">
+                        <form method="post" enctype="multipart/form-data" action="../../controller/controllerCarro.php">
                             <input type="hidden" name="txtID" id="txtID" value="<?php echo $carro['Id']; ?>"/>
 
                             <button type="submit" name="action" value="seleccionar" class="btn btn-primary">Seleccionar</button>

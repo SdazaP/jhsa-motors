@@ -27,7 +27,7 @@ $listaMarcas = $sql_mar->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <form method="POST" action="../../controller/actions_marca.php">
+    <form method="POST" action="../../controller/controllerMarca.php">
         <div class="form-group input-group mb-3">
             <label class="input-group-text" for="inputGroupSelect01">ID</label>
             <input type="hidden" class="form-control" name="txtID" value="<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>">
@@ -62,7 +62,7 @@ $listaMarcas = $sql_mar->fetchAll(PDO::FETCH_ASSOC);
                 <td><?php echo $marca['id']; ?></td>
                 <td><?php echo $marca['nombre']; ?></td>
                 <td>
-                    <form method="post" action="../../controller/actions_marca.php">
+                    <form method="post" action="../../controller/controllerMarca.php">
                         <input type="hidden" name="txtID" value="<?php echo $marca['id']; ?>" />
                         <button type="submit" name="action" value="seleccionar" class="btn btn-primary">Seleccionar</button>
                         <button type="submit" name="action" value="borrar" class="btn btn-danger">Borrar</button>
