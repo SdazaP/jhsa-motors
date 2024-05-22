@@ -17,6 +17,7 @@
             <a class="nav-item nav-link active" href="#">Administrador del sitio web</a>
             <a class="nav-item nav-link" href="<?php echo $url."/administrador/view/section/inicio.php"?>">Inicio</a>
             <a class="nav-item nav-link" href="<?php echo $url."/administrador/view/section/carros.php"?>">Carros</a>
+            <a class="nav-item nav-link" href="<?php echo $url."/administrador/view/section/marca.php"?>">Marcas</a>
             <a class="nav-item nav-link" href="<?php echo $url."/administrador/controller/controllerLogOut.php"?>">Cerrar</a>
             <a class="nav-item nav-link" href="<?php echo $url."/"?>">Ver sitio web</a>
             
