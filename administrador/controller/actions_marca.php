@@ -2,50 +2,52 @@
 include_once("../model/bd.php");
 include_once("../model/Marca.php");
 
-class MarcaController {
-    private $modelo;
+$marca = new Marca($conexion);
 
-    public function __construct($db) {
-        $this->modelo = new Marca($db);
+
+$action = isset($_POST['action']) ? $_POST['action'] : '';
+$txtID = isset($_POST['txtID']) ? $_POST['txtID'] : '';
+$txtNombre = isset($_POST['txtNombre']) ? $_POST['txtNombre'] : '';
+
+if($action){
+    switch ($action) {
+        case 'registrar':
+            $datos = [
+                'nombre' => $txtNombre
+            ];
+            $marca->registrar($datos);
+            redirect('marca.php');
+            break;
+
+        case 'modificar':
+            $datos = [
+                'id' => $txtID,
+                'nombre' => $txtNombre
+            ];
+            $marca->modificar($datos);
+            redirect('marca.php');
+            break;
+
+        case 'cancelar':
+            redirect('marca.php');
+            break;
+
+        case 'seleccionar':
+            $marcaSeleccionada = $marca->seleccionar($txtID);
+            header("Location: ../view/section/marca.php?" . http_build_query($marcaSeleccionada));
+            break;
+
+        case 'borrar':
+            $marca->delete($txtID);
+            $this->redirect('marca.php');
+            break;
+
+        default:
+            // Acción no reconocida
+            break;
     }
-
-    public function handleRequest() {
-        $action = isset($_POST['action']) ? $_POST['action'] : '';
-        $txtID = isset($_POST['txtID']) ? $_POST['txtID'] : '';
-        $txtNombre = isset($_POST['txtNombre']) ? $_POST['txtNombre'] : '';
-
-        switch ($action) {
-            case 'registrar':
-                $this->modelo->create($txtNombre);
-                $this->redirect('marca.php');
-                break;
-
-            case 'modificar':
-                $this->modelo->update($txtID, $txtNombre);
-                $this->redirect('marca.php');
-                break;
-
-            case 'cancelar':
-                $this->redirect('marca.php');
-                break;
-
-            case 'seleccionar':
-                $marca = $this->modelo->getById($txtID);
-                $this->redirect('marca.php', $marca);
-                break;
-
-            case 'borrar':
-                $this->modelo->delete($txtID);
-                $this->redirect('marca.php');
-                break;
-
-            default:
-                // Acción no reconocida
-                break;
-        }
-    }
-
-    private function redirect($url, $data = null) {
+}
+    function redirect($url, $data = null) {
         if ($data) {
             $query = http_build_query($data);
             header("Location: ../view/section/$url?$query");
@@ -54,8 +56,4 @@ class MarcaController {
         }
         exit();
     }
-}
-
-$controller = new MarcaController($conexion);
-$controller->handleRequest();
 ?>

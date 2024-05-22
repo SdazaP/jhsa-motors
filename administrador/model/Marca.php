@@ -6,14 +6,7 @@ class Marca {
         $this->conexion = $db;
     }
 
-    public function getAll() {
-        $sql = "SELECT * FROM marca";
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getById($id) {
+    public function seleccionar($id) {
         $sql = "SELECT * FROM marca WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -21,25 +14,22 @@ class Marca {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function create($nombre) {
+    public function registrar($datos) {
         $sql = "INSERT INTO marca (nombre) VALUES (:nombre)";
         $stmt = $this->conexion->prepare($sql);
-        $stmt->bindParam(':nombre', $nombre);
-        $stmt->execute();
+        return $stmt->execute();
     }
 
-    public function update($id, $nombre) {
+    public function modificar($datos) {
         $sql = "UPDATE marca SET nombre = :nombre WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
-        $stmt->bindParam(':nombre', $nombre);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
+        return $stmt->execute($datos);
     }
 
-    public function delete($id) {
+    public function borrar($id) {
         $sql = "DELETE FROM marca WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
     }
 }

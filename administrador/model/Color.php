@@ -6,14 +6,7 @@ class Color {
         $this->conexion = $db;
     }
 
-    public function getAll() {
-        $sql = "SELECT * FROM colores";
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getById($id) {
+    public function seleccionar($id) {
         $sql = "SELECT * FROM colores WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -21,26 +14,23 @@ class Color {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function create($color) {
+    public function registrar($datos) {
         $sql = "INSERT INTO colores (color) VALUES (:color)";
         $stmt = $this->conexion->prepare($sql);
-        $stmt->bindParam(':color', $color);
-        $stmt->execute();
+        return $stmt->execute($datos);
     }
 
-    public function update($id, $color) {
+    public function modificar($datos) {
         $sql = "UPDATE colores SET color = :color WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
-        $stmt->bindParam(':color', $color);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
+        return $stmt->execute($datos);
     }
 
-    public function delete($id) {
+    public function borrar($id) {
         $sql = "DELETE FROM colores WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
     }
 }
 ?>
